@@ -1,3 +1,6 @@
 {
-  "image": "node:lts"
+  "image": "node:lts",
+  "extensions": ["esbenp.prettier-vscode"],
+  "appPort": [4000],
+  "postCreateCommand": "npm i"
 }
