@@ -2,7 +2,6 @@ import { gql } from 'apollo-server'
 
 const typeDefs = gql`
   # Simple Example API surface for the pump controller system
-
   type State {
     time: String
     valve: Int
@@ -39,8 +38,26 @@ const typeDefs = gql`
     config: Config!
   }
 
+  type Circuit {
+    id: ID!
+    showInFeatures: Boolean!
+    isOn: Boolean!
+    name: String
+    type: CircuitType
+    nameId: ID!
+  }
+
+  type CircuitType {
+    val: ID!
+    name: String
+    desc: String
+    isLight: Boolean
+  }
+
   type Config {
     options(id: ID): [ConfigOption]!
+    circuits: [Circuit]!
+    lightingCircuits: [Circuit]!
   }
 
   type ConfigOption {
