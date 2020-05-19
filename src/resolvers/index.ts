@@ -4,11 +4,41 @@ import { IResolvers } from 'apollo-server'
 const prefixUrl = process.env.POOL_CONTROLLER_ADDRESS || 'http://localhost:4200'
 const instance = got.extend({ prefixUrl })
 
+const mockConfigOptions = [
+  {
+    id: '1',
+    name: 'spa',
+    descrption: 'spa',
+  },
+  {
+    id: '2',
+    name: 'pool',
+    descrption: 'pool',
+  },
+]
+
 // schema. This resolver retrieves books from the "books" array above.
 const resolvers: IResolvers = {
   Query: {
-    system: async () => {
-      return await instance.get('state/all').json()
+    system: () => {
+      return {
+        state: async () => {
+          return await instance.get('state/all').json()
+        },
+        // Return a default object
+        // empty is fine if everything in it is handled by chained resolvers
+        config: () => ({}),
+      }
+    },
+  },
+  Config: {
+    options: (_, { id }: { id: String }) => {
+      // If we are filtering by ID then filter our list
+      if (id) {
+        return mockConfigOptions.filter((config) => config.id === id)
+      }
+      // otherwise return the entire list
+      else return mockConfigOptions
     },
   },
   Mutation: {

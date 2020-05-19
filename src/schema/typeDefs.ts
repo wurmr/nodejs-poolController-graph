@@ -3,7 +3,7 @@ import { gql } from 'apollo-server'
 const typeDefs = gql`
   # Simple Example API surface for the pump controller system
 
-  type System {
+  type State {
     time: String
     valve: Int
     delay: Int
@@ -31,7 +31,22 @@ const typeDefs = gql`
   }
 
   type Query {
-    system: System
+    system: System!
+  }
+
+  type System {
+    state: State!
+    config: Config!
+  }
+
+  type Config {
+    options(id: ID): [ConfigOption]!
+  }
+
+  type ConfigOption {
+    id: ID!
+    name: String
+    description: String
   }
 
   type Mutation {
