@@ -8,12 +8,12 @@ const mockConfigOptions = [
   {
     id: '1',
     name: 'spa',
-    descrption: 'spa',
+    description: 'spa',
   },
   {
     id: '2',
     name: 'pool',
-    descrption: 'pool',
+    description: 'pool',
   },
 ]
 
