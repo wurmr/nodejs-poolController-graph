@@ -33,6 +33,11 @@ const typeDefs = gql`
   type Query {
     system: System
   }
+
+  type Mutation {
+    startSuperChlorinate(id: ID!, superChlorinate: Boolean): System
+    setSuperChlorHours(id: ID!, hours: Int!): System
+  }
 `
 
 export default typeDefs

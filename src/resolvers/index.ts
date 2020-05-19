@@ -1,13 +1,36 @@
 import got from 'got'
+import { IResolvers } from 'apollo-server'
 
-const poolControllerAddress =
-  process.env.POOL_CONTROLLER_ADDRESS || 'http://localhost:4200'
+const prefixUrl = process.env.POOL_CONTROLLER_ADDRESS || 'http://localhost:4200'
+const instance = got.extend({ prefixUrl })
 
 // schema. This resolver retrieves books from the "books" array above.
-const resolvers = {
+const resolvers: IResolvers = {
   Query: {
     system: async () => {
-      return await got.get(`${poolControllerAddress}/state/all`).json()
+      return await instance.get('state/all').json()
+    },
+  },
+  Mutation: {
+    startSuperChlorinate: async (_, args: { id: String }) => {
+      // Do something interesting here to mutate the state, for now we call the rest api
+      //* Example:
+      //* state.chlorinators.superChlorinate(parseInt(args.id, 10), args.superChlorinate);
+      await instance.put('state/chlorinator/superChlorinate', {
+        json: { ...args },
+      })
+      // Return the entire state
+      return await instance.get('state/all').json()
+    },
+    setSuperChlorHours: async (_, args: { id: String; hours: Number }) => {
+      // Do something interesting here to mutate the state, for now we call the rest api
+      //* Example:
+      //* state.chlorinators.setSuperChlorHours(parseInt(args.id, 10), parseInt(args.hours, 10));
+      await instance.put('state/chlorinator/superChlorHours', {
+        json: { ...args },
+      })
+      // Return the entire state
+      return await instance.get('state/all').json()
     },
   },
 }
