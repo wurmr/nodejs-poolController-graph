@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/wurmr/nodejs-poolController-graph#readme",
   "dependencies": {
-    "apollo-server": "^2.25.3",
+    "apollo-server": "^2.25.4",
     "got": "^11.8.5",
     "graphql": "^15.0.0"
   },
